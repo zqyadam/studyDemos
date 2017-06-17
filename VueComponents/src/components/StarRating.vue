@@ -1,6 +1,6 @@
 <template>
   <ul class="rating" @mouseout="mouseOut" :style="{width:ratingWidth}">
-    <li class="rating-item" v-for="(title,index) in titles" :title="title" @mousemove.stop="lightStar(index+1,$event)" @click.stop="setLightOnNum(index+1,$event)" :class="ratingItemsClass[index]">
+    <li class="rating-item" v-for="(title,index) in titles" :title="title" @mousemove="!lock && lightStar(index+1,$event)" @click="!lock && setLightOnNum(index+1,$event)" :class="ratingItemsClass[index]">
     </li>
   </ul>
 </template>
@@ -12,6 +12,7 @@ export default {
         ratingItemsClass: [],
         ratingWidth: 165,
         step: 1,
+        lock: false,
       }
     },
     props: {
@@ -34,6 +35,10 @@ export default {
       mode: {
         type: String,
         default: 'lightEntire'
+      },
+      lockMode: {
+        type: Boolean,
+        default: false
       }
     },
     methods: {
@@ -106,21 +111,18 @@ export default {
         this.ratingItemsClass = newRatingItemsClass;
       },
       setLightOnNum: function(index, e) {
-        // if (this.entireMode) {
-        //   if (e && ((e.pageX - e.target.offsetLeft) < e.target.offsetWidth / 2)) {
-        //     this.num = index - 0.5;
-        //   } else {
-        //     this.num = index;
-        //   }
-        // } else {
-        //   this.num = index;
-        // }
         this.num = index - this.step;
-        this.$emit('update:lightOnNum', this.num)
-        this.$emit('select', this.num)
+        this.$emit('update:lightOnNum', this.num);
+        this.$emit('select', this.num);
+        if (this.lockMode) {
+          this.lock = true;
+        }
       },
       mouseOut: function() {
         this.lightStar(this.num);
+      },
+      unBindEvents: function() {
+
       }
     },
     mounted: function() {

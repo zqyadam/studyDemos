@@ -3,7 +3,12 @@
     <li>
       <h3>星级评分</h3>
       <div class="paper">
-        <StarRating :lightOnNum.sync="num" :titles="titles" ></StarRating>
+        <StarRating :lightOnNum.sync="num" :titles="titles" :mode="mode" @select="select"></StarRating>
+        <div style="text-align: left;margin:5px;">
+          评分：<span v-text="num"></span>
+          <br> 模式(lightEntire/lightHalf)：
+          <input type="input" v-model="mode">
+        </div>
       </div>
     </li>
   </ul>
@@ -14,8 +19,8 @@ import StarRating from './StarRating';
 export default {
   data() {
       return {
-      	// Star Components
-        num: 1,
+        // Star Component Options
+        num: 4.5,
         titles: [
           "很不好",
           "不好",
@@ -26,12 +31,20 @@ export default {
           "完美",
           "简直完美到家了"
         ],
-        // 
+        mode: 'lightEntire'
+          // 
+      }
+    },
+    methods: {
+      // Star Component:Star clicked
+      select: function(num) {
+        // console.log('Index:select');
+        // console.log(num);
       }
     },
     components: {
       StarRating
-    }
+    },
 }
 </script>
 <style>

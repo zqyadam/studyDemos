@@ -3,7 +3,7 @@
     <li>
       <h3>星级评分</h3>
       <div class="paper">
-        <StarRating :lightOnNum.sync="num" :titles="titles" :mode="mode" :lockMode="true" @select="select"></StarRating>
+        <StarRating :lightOnNum.sync="num" :titles="titles" :mode="mode" :lockMode="false" @select="select"></StarRating>
         <div style="text-align: left;margin:5px;">
           评分：<span v-text="num"></span>
           <br> 模式(lightEntire/lightHalf)：
@@ -31,8 +31,8 @@ export default {
           "完美",
           "简直完美到家了"
         ],
-        mode: 'lightHalf'
-          // 
+        mode: 'lightEntire'  
+          // lightEntire / lightHalf
       }
     },
     methods: {

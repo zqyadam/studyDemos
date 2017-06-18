@@ -18,7 +18,7 @@ export default {
     props: {
       lightOnNum: {
         type: Number,
-        default: 2
+        default: 0
       },
       titles: {
         type: Array,
@@ -76,14 +76,10 @@ export default {
        */
       lightEntire: function(num) {
         num = parseInt(num);
-        let newRatingItemsClass = [];
+        let newRatingItemsClass = new Array(this.titles.length).fill('lightOff');
         // 点亮全部
-        for (let i = 0; i < this.titles.length; i++) {
-          if (i < num) {
-            newRatingItemsClass[i] = 'lightOn';
-          } else {
-            newRatingItemsClass[i] = 'lightOff';
-          }
+        for (let i = 0; i < num; i++) {
+          newRatingItemsClass[i] = 'lightOn';
         }
         this.ratingItemsClass = newRatingItemsClass;
       },
@@ -92,16 +88,12 @@ export default {
        * @param  {Number} num 点亮星星个数
        */
       lightHalf: function(num) {
-        let newRatingItemsClass = [],
+        let newRatingItemsClass = new Array(this.titles.length).fill('lightOff'),
           isHalf = parseInt(num) !== num;
         num = parseInt(num);
         // 点亮之前全部
-        for (let i = 0; i < this.titles.length; i++) {
-          if (i < num) {
-            newRatingItemsClass[i] = 'lightOn';
-          } else {
-            newRatingItemsClass[i] = 'lightOff';
-          }
+        for (let i = 0; i < num; i++) {
+          newRatingItemsClass[i] = 'lightOn';
         }
         // 点亮最后半颗
         if (isHalf) {
@@ -126,12 +118,7 @@ export default {
       }
     },
     mounted: function() {
-      this.titles.forEach(() => {
-        this.ratingItemsClass.push('lightOff');
-      })
-
       this.num = this.lightOnNum;
-
       this.ratingWidth = 33 * this.titles.length;
       this.lightStar(this.num);
     }

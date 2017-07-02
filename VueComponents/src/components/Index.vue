@@ -2,12 +2,25 @@
   <ul>
     <li>
       <h3>星级评分</h3>
+      <!-- 第一种方法 -->
       <div class="paper">
-        <StarRating :lightOnNum.sync="num" :titles="titles" :mode="mode" :lockMode="false" @select="select"></StarRating>
+        <StarRating :lightOnNum.sync="num" :titles="titles" :mode="starMode1" :lockMode="false" @select="select"></StarRating>
         <div style="text-align: left;margin:5px;">
           评分：<span v-text="num"></span>
           <br> 模式(lightEntire/lightHalf)：
-          <input type="input" v-model="mode">
+          <input type="input" v-model="starMode1">
+        </div>
+      </div>
+      <!-- 第二种方法 -->
+      <div class="paper">
+        <StarRating2 :lightOnNum.sync="num" :total="8" :lockMode="false" @select="select" :mode="starMode2">
+        </StarRating2>
+        <div style="text-align: left;margin:5px;">
+          评分：<span v-text="num"></span>
+          <br> 模式：
+          <input type="radio" v-model="starMode2" name="starMode2" value="entire">完整
+          <input type="radio" v-model="starMode2" name="starMode2" value="half">半星
+          <input type="radio" v-model="starMode2" name="starMode2" value="quarter">1/4星
         </div>
       </div>
     </li>
@@ -15,12 +28,13 @@
 </template>
 <script>
 import StarRating from './StarRating';
+import StarRating2 from './StarRating2';
 
 export default {
   data() {
       return {
         // Star Component Options
-        num: 4.5,
+        num: 4,
         titles: [
           "很不好",
           "不好",
@@ -31,8 +45,9 @@ export default {
           "完美",
           "简直完美到家了"
         ],
-        mode: 'lightEntire'  
+        starMode1: 'lightEntire',
           // lightEntire / lightHalf
+        starMode2:'entire'
       }
     },
     methods: {
@@ -43,7 +58,8 @@ export default {
       }
     },
     components: {
-      StarRating
+      StarRating,
+      StarRating2
     },
 }
 </script>
